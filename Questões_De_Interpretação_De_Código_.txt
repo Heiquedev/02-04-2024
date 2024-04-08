@@ -1,0 +1,174 @@
+# Questões de interpretação de código
+
+**1) Encapsulamento -** Considere o seguinte código:
+
+```tsx
+class Person {
+    private name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+
+    getName(): string {
+        return this.name;
+    }
+}
+
+const person = new Person("John");
+console.log(person.name);
+```
+
+O que será impresso no console? Preste muita atenção antes de responder! Haverá algum erro? Se sim, como você poderia corrigi-lo?
+
+		R: Nada seria impresso, pois o nome esta privado. Corrigir íamos  isso usando a função "getName" retornando assim o nome do objeto "Person".
+
+
+**2) Herança -** Considere o seguinte código:
+
+```tsx
+class Animal {
+    sound: string;
+
+    constructor(sound: string) {
+        this.sound = sound;
+    }
+
+    makeSound() {
+        console.log(this.sound);
+    }
+}
+
+class Dog extends Animal {
+    breed: string;
+
+    constructor(breed: string) {
+        super("Woof!");
+        this.breed = breed;
+    }
+
+    displayInfo() {
+        console.log(`This dog is a ${this.breed} breed.`);
+    }
+}
+
+class GoldenRetriever extends Dog {
+    constructor() {
+        super("Golden Retriever");
+    }
+
+    fetch() {
+        console.log("Fetching...");
+    }
+}
+
+const golden = new GoldenRetriever();
+golden.makeSound();
+golden.displayInfo();
+golden.fetch();
+```
+
+O que será impresso no console?
+
+	Será impresso um log com o som do animal, o log com a info do cachorro e um log com uma string "Fetching".	
+
+
+ **3) Polimorfismo -** Considere o seguinte código:
+
+```tsx
+class Shape {
+    draw(): void {
+        console.log("Desenhando forma...");
+    }
+}
+
+class Circle extends Shape {
+    draw(): void {
+        console.log("Desenhando círculo...");
+    }
+
+    calculateArea(): void {
+        console.log("Calculando área do círculo...");
+    }
+}
+
+class Square{
+    draw(): void {
+        console.log("Desenhando quadrado...");
+    }
+}
+
+function drawShapes(shapes: Shape[]): void {
+    shapes.forEach(shape => {
+        shape.draw();
+    });
+}
+
+const circle = new Circle();
+const square = new Square();
+
+const shapes: Shape[] = [circle, square];
+
+drawShapes(shapes);
+
+```
+
+O que acontecerá neste código? PRESTE MUITA ATENÇÃO! Ocorrerá algum erro? Se sim, qual?
+
+		R:Sim, retornará um erro, pois o quadrado não é uma classe filha de "Shape", então não poderá usar a função draw.
+
+**4) Interfaces -** Considere o seguinte código:
+
+```tsx
+interface Calculator {
+    add(a: number): number {
+        return a + 10;
+    }
+}
+
+class BasicCalculator implements Calculator {
+    add(a: number): number {
+        return a + 10;
+    }
+}
+
+const calculator: Calculator = new BasicCalculator();
+const result = calculator.add(5, 7);
+console.log(result);
+```
+
+O que acontecerá neste código? PRESTE MUITA ATENÇÃO! Ocorrerão erros? Se sim, quais?
+
+		R: Ele está criando uma classe usando uma interface. Depois cria um objeto guardando ele em uma variável, chama essa variável adicionando dois valores a ela em
+		 outra variável, e é ai que ocorrerá um dos erros, pois na classe e interface pedem apenas um valor e ele insere dois. Terminando isso ele chama um log com a variável 
+		anterior resultando em mais um erro.
+
+**5) Enumeradores -** Considere o seguinte código:
+
+```tsx
+enum DayOfWeek {
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6,
+    Sunday = 7
+}
+
+function getNextDay(day: DayOfWeek): DayOfWeek {
+    if (day === DayOfWeek.Sunday) {
+        return DayOfWeek.Monday;
+    } else {
+        return day + 1;
+    }
+}
+
+const currentDay: DayOfWeek = DayOfWeek.Wednesday;
+const nextDay: DayOfWeek = getNextDay(currentDay);
+console.log("Next day:", nextDay);
+```
+
+O será mostrado no console?
+
+		R: Retornará um log assim: " Next day:  4 ".
